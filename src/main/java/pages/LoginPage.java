@@ -11,6 +11,7 @@ public class LoginPage extends BasePage {
     public LoginPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
+        this.url = "/index.php?rt=account/login";
     }
 
     private WebElement getUsernameField() {

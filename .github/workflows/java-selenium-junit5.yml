@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        java-version: [11]
+        java-version: [20]
 
     steps:
       - uses: actions/checkout@v2
@@ -34,10 +34,6 @@ jobs:
 
       - name: Build with Maven
         run: mvn -B package --file pom.xml
-
-      # This step sets up a Chrome browser for Selenium tests
-      - name: Setup Chrome Driver
-        uses: browser-actions/setup-chrome@latest
 
       # Run Selenium tests
       - name: Run tests

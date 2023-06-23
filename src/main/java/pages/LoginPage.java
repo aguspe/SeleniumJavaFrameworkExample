@@ -30,6 +30,10 @@ public class LoginPage extends BasePage {
         return driver.findElement(By.className("menu_text"));
     }
 
+    private WebElement getError() {
+        return driver.findElement(By.className("alert-danger"));
+    }
+
     public void login(String username, String password) {
         getUsernameField().sendKeys(username);
         getPasswordField().sendKeys(password);
@@ -39,4 +43,6 @@ public class LoginPage extends BasePage {
     public String getHeaderText() {
         return getHeader().getText();
     }
+
+    public String getErrorText() { return getError().getText(); }
 }

@@ -1,9 +1,9 @@
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Assertions;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 import pages.LoginPage;
 import utils.PropertyHandler;
+
+import static org.assertj.core.api.Assertions.*;
 
 public class LoginTest extends AbstractTest {
 
@@ -14,9 +14,8 @@ public class LoginTest extends AbstractTest {
 
     private String password;
 
-    @BeforeEach
+    @BeforeTest
     public void setUp() {
-        super.setUp();
         this.propertyHandler = new PropertyHandler("src/main/resources/userdata.properties");
         this.username = propertyHandler.getProperty("username");
         this.password = propertyHandler.getProperty("password");
@@ -24,18 +23,16 @@ public class LoginTest extends AbstractTest {
         loginPage.visit();
     }
 
-    @Test
-    @DisplayName("Test that a registered user can log in with the correct credentials")
+    @Test(description = "Test that a registered user can log in with the correct credentials")
     public void canLoginWithValidCredentials() {
         loginPage.login(username, password);
-        Assertions.assertEquals("Welcome back Agustin", loginPage.getHeaderText());
+        assertThat(loginPage.getHeaderText()).isEqualTo("Welcome back Agustin");
     }
 
-    @Test
-    @DisplayName("Test that a registered user cannot log in with the incorrect credentials")
+    @Test(description = "Test that a registered user cannot log in with the incorrect credentials")
     public void cannotLoginWithInvalidCredentials() {
         loginPage.login(username, "wrongPassword");
-        Assertions.assertEquals("×\n" + "Error: Incorrect login or password provided.",
-                loginPage.getErrorText());
+        assertThat(loginPage.getErrorText())
+                .isEqualTo("×\n" + "Error: Incorrect login or password provided.");
     }
 }

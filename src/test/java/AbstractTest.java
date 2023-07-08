@@ -1,31 +1,27 @@
-import io.qameta.allure.Attachment;
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeTest;
 
 public abstract class AbstractTest {
     protected WebDriver driver;
 
-    @BeforeEach
-    public void setUp() {
+    @BeforeSuite
+    public void setupAll() {
         WebDriverManager.chromedriver().setup();
+    }
+
+    @BeforeTest
+    public void setUpDriver() {
         driver = new ChromeDriver();
     }
 
-    @AfterEach
+    @AfterTest
     public void tearDown() {
         if (driver != null) {
-            saveScreenshot();
             driver.quit();
         }
-    }
-
-    @Attachment(value = "Screenshot", type = "image/png")
-    public void saveScreenshot() {
-        ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 }
